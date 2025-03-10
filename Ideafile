@@ -1,0 +1,24 @@
+goal: an app connected to an ai that lets you specify the topic which you want to study.
+      the app will then use ai to make quizlet like study-environment for your personalized needs.
+
+techstack: index.php
+           jquery
+           deepseek-r1:7b
+
+mvp: php app with different inputs and labels. data is sent to ai (ollama)
+     ollamafile to process inputs accordingly and send back data to api to display.
+
+
+prototype:
+
+
+REQUEST from CLIENT
+curl http://localhost:11434/api/generate -d '{
+  "model": "phi3.5",
+  "prompt": "Why is the sky blue?",
+  "stream": false
+}'
+
+
+RESPONSE from SERVER
+{"model":"phi3.5","created_at":"2025-03-10T14:26:50.44769304Z","response":"Hello! How can I help you today?","done":true,"done_reason":"stop","context":[32010,29871,13,2918,32007,29871,13,32001,29871,13,10994,29991,1128,508,306,1371,366,9826,29973],"total_duration":1070613611,"load_duration":9486988,"prompt_eval_count":10,"prompt_eval_duration":430000000,"eval_count":10,"eval_duration":627000000}
