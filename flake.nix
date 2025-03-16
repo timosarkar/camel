@@ -1,3 +1,6 @@
+# nix develop | pull dependencies
+# dune init project <projectname>
+# change packageName on line 15 with <projectname>
 {
   description = "nix flake to build ocaml dune projects";
 
@@ -9,6 +12,7 @@
     let
       lib = nixpkgs.lib;
       eachSystem = lib.genAttrs (import systems);
+      packageName = "hello";
     in
     {
       packages = eachSystem (system:
@@ -17,10 +21,10 @@
           ocamlPackages = legacyPackages.ocamlPackages;
         in
         {
-          default = self.packages.${system}.hello;
+          default = self.packages.${system}.ocamlProject;
 
-          hello = ocamlPackages.buildDunePackage {
-            pname = "PLACEHOLDER_PROJECTNAME";
+          ocamlProject = ocamlPackages.buildDunePackage {
+            pname = packageName;
             version = "0.1.0";
             duneVersion = "3";
             src = ./.;
@@ -44,10 +48,11 @@
               legacyPackages.fswatch
               ocamlPackages.odoc
               ocamlPackages.ocaml-lsp
+              ocamlPackages.utop
             ];
 
             inputsFrom = [
-              self.packages.${system}.hello
+              self.packages.${system}.ocamlProject
             ];
           };
         });
